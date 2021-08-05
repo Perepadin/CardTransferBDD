@@ -6,6 +6,16 @@ public class DataHelper {
   private DataHelper() {}
 
   @Value
+  public static class CardsInfo {
+    private String first;
+    private String second;
+  }
+
+  public static CardsInfo getCardsInfo() {
+    return new CardsInfo("5559 0000 0000 0001", "5559 0000 0000 0002");
+  }
+
+  @Value
   public static class AuthInfo {
     private String login;
     private String password;
