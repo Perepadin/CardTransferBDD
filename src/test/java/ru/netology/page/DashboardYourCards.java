@@ -4,6 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.val;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -14,6 +15,10 @@ public class DashboardYourCards {
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
 
+    private SelenideElement heading = $("[data-test-id=dashboard]");
+    public DashboardYourCards() {
+        heading.shouldBe(visible);
+    }
 
     public int getFirstCardBalance() {
         val text = cards.first().text();
@@ -32,14 +37,14 @@ public class DashboardYourCards {
         return Integer.parseInt(value);
     }
 
-    public DashboardPage replenishFirst() {
+    public DashboardYourCards replenishFirst() {
         replenishFirstCardButton.click();
-        return new DashboardPage();
+        return new DashboardYourCards();
     }
 
-    public DashboardPage replenishSecond() {
+    public DashboardYourCards replenishSecond() {
         replenishSecondCardButton.click();
-        return new DashboardPage();
+        return new DashboardYourCards();
     }
 
 }
