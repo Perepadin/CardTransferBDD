@@ -57,7 +57,7 @@ class MoneyTransferTest {
     @Disabled
     @Test
     void shouldTransferMoneyBetweenOwnCardsV3() {
-        // тест проходит - проводит перевод большей суммы чем есть в наличии - баг
+        // тест падает - проводит перевод большей суммы чем есть в наличии - баг
         var cardsInfo = DataHelper.getCardsInfo();
         var cards = new DashboardYourCards();
         int firstBalanceBefore = cards.getFirstCardBalance();
@@ -67,9 +67,8 @@ class MoneyTransferTest {
         int replenishSum = 50000;
         cards.replenishSecond();
         replenishCard.replenish(Integer.toString(replenishSum), cardsInfo, 2);
-        assertEquals(firstBalanceBefore - replenishSum, cards.getFirstCardBalance());
-        assertEquals(secondBalanceBefore + replenishSum, cards.getSecondCardBalance());
-        assertEquals(false, true );
+        assertEquals(10000, firstBalanceBefore - replenishSum);
+        assertEquals(10000, secondBalanceBefore + replenishSum);
     }
 }
 
