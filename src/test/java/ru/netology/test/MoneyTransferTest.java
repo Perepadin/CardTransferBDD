@@ -29,11 +29,9 @@ class MoneyTransferTest {
         var cards = new DashboardYourCards();
         int firstBalanceBefore = cards.getFirstCardBalance();
         int secondBalanceBefore = cards.getSecondCardBalance();
-
-        var replenishCard = new ReplenishCards();
         int replenishSum = 100;
-        cards.replenishFirst();
-        replenishCard.replenish(Integer.toString(replenishSum), cardsInfo, 1);
+        var replenishThisCard = cards.replenishFirst();
+        replenishThisCard.replenish(Integer.toString(replenishSum), cardsInfo, 1);
         assertEquals(firstBalanceBefore + replenishSum, cards.getFirstCardBalance());
         assertEquals(secondBalanceBefore - replenishSum, cards.getSecondCardBalance());
     }
@@ -45,10 +43,8 @@ class MoneyTransferTest {
         var cards = new DashboardYourCards();
         int firstBalanceBefore = cards.getFirstCardBalance();
         int secondBalanceBefore = cards.getSecondCardBalance();
-
-        var replenishCard = new ReplenishCards();
-        int replenishSum = 500;
-        cards.replenishSecond();
+        int replenishSum = 100;
+        var replenishCard = cards.replenishSecond();
         replenishCard.replenish(Integer.toString(replenishSum), cardsInfo, 2);
         assertEquals(firstBalanceBefore - replenishSum, cards.getFirstCardBalance());
         assertEquals(secondBalanceBefore + replenishSum, cards.getSecondCardBalance());
@@ -57,18 +53,19 @@ class MoneyTransferTest {
     @Disabled
     @Test
     void shouldTransferMoneyBetweenOwnCardsV3() {
-        // тест падает - проводит перевод большей суммы чем есть в наличии - баг
+        // тест падает - проводит перевод большей суммы, чем есть в наличии - баг
         var cardsInfo = DataHelper.getCardsInfo();
         var cards = new DashboardYourCards();
+        var replenish = new ReplenishCards();
         int firstBalanceBefore = cards.getFirstCardBalance();
         int secondBalanceBefore = cards.getSecondCardBalance();
-
-        var replenishCard = new ReplenishCards();
         int replenishSum = 50000;
-        cards.replenishSecond();
+
+        var replenishCard = cards.replenishSecond();
         replenishCard.replenish(Integer.toString(replenishSum), cardsInfo, 2);
-        assertEquals(10000, firstBalanceBefore - replenishSum);
-        assertEquals(10000, secondBalanceBefore + replenishSum);
+        replenish.errorIfTransferIsMoreThenBalance();
+        assertEquals(firstBalanceBefore, cards.getFirstCardBalance());
+        assertEquals(secondBalanceBefore, cards.getSecondCardBalance());
     }
 }
 

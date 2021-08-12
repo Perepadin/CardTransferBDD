@@ -3,6 +3,10 @@ package ru.netology.page;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class ReplenishCards {
@@ -21,5 +25,10 @@ public class ReplenishCards {
         }
         replenishButton.click();
         return new ReplenishCards();
+    }
+
+    public void errorIfTransferIsMoreThenBalance() {
+        SelenideElement form = $(".form");
+        $(byText("Сумма перевода не может превышать допустимый баланс по карте")).shouldBe(visible, Duration.ofSeconds(10));
     }
 }

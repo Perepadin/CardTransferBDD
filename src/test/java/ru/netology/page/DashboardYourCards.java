@@ -16,6 +16,7 @@ public class DashboardYourCards {
     private final String balanceFinish = " р.";
 
     private SelenideElement heading = $("[data-test-id=dashboard]");
+
     public DashboardYourCards() {
         heading.shouldBe(visible);
     }
@@ -37,14 +38,13 @@ public class DashboardYourCards {
         return Integer.parseInt(value);
     }
 
-    public DashboardYourCards replenishFirst() {
+    public ReplenishCards replenishFirst() {
         replenishFirstCardButton.click();
-        return new DashboardYourCards();
+        return new ReplenishCards();
     }
 
-    public DashboardYourCards replenishSecond() {
+    public ReplenishCards replenishSecond() {
         replenishSecondCardButton.click();
-        return new DashboardYourCards();
+        return new ReplenishCards();
     }
-
 }
